@@ -60,7 +60,8 @@ export default class MainPage extends React.Component {
                     user={this.props.user}
                 /> :
                 <Profile
-                   user={this.props.user}
+                    exit={this.props.exit}
+                    user={this.props.user}
                 />
             }
           </div>

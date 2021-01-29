@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class Profile extends React.Component {
 
   static propTypes = {
     user: PropTypes.object,
+    exit: PropTypes.func,
   }
 
 
@@ -17,6 +19,9 @@ export default class Profile extends React.Component {
         <div className='profile'>
           <div className='profile__container'>
             <span className='profile__user-name'><b>Ваш ник: </b>{this.props.user.userName}</span>
+            <Link to='/' className='exit__container'>
+              <span className='exit' onClick={this.props.exit}>Выйти</span>
+            </Link>
           </div>
         </div>
     )

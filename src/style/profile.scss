@@ -17,6 +17,21 @@
   }
 
   & .profile__user-name {
-    text-align: center;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+  & .exit__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    background: none;
+    border: 1px solid #98a9cd;
+    color: #98a9cd;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
   }
 }
