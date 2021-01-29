@@ -14,7 +14,6 @@ export default class ShowQuestions extends React.Component {
   }
 
   static propTypes = {
-    questionsList: PropTypes.array,
     changeCorrectAnswer: PropTypes.func,
   }
 
@@ -26,10 +25,6 @@ export default class ShowQuestions extends React.Component {
     if(prevState.typeMenu !== this.state.typeMenu) {
       this.sortedArray();
     }
-
-    if(this.props.questionsList !== prevProps.questionsList && this.state.typeMenu === 'third') {
-      this.sortedArray();
-    }
   }
 
   changeTypeMenu = (action) => {
@@ -39,7 +34,7 @@ export default class ShowQuestions extends React.Component {
   }
 
   sortedArray = () => {
-    let questionsList = this.props.questionsList.slice();
+    let questionsList = JSON.parse(localStorage.getItem('user')).questionsList;
     const typeMenu = this.state.typeMenu;
 
     if(typeMenu === 'second') {
@@ -72,12 +67,12 @@ export default class ShowQuestions extends React.Component {
           </div>
           <div className="questions__show-block">
             <div className="questions__menu">
-              <span>Сортировка вопросов:</span>
-              <select name="" id="">
-                <option value="">По умолчанию</option>
-                <option value="">Отвеченные вопросы</option>
-                <option value="">Неотвеченные вопросы</option>
-              </select>
+              <span>Список вопросов:</span>
+              {/*<select name="" id="">*/}
+              {/*  <option value="">По умолчанию</option>*/}
+              {/*  <option value="">Отвеченные вопросы</option>*/}
+              {/*  <option value="">Неотвеченные вопросы</option>*/}
+              {/*</select>*/}
             </div>
             <div className="questions__container">
 

@@ -61,11 +61,12 @@ export default class Auth extends React.Component {
               />
             </div>
             <div className='auth-form__button-container'>
-              <Link to='/public'>
-                <button
-                    className='auth-form__button'
-                    onClick={this.auth}
-                >Авторизация</button>
+              <Link
+                  to='/public'
+                  className='auth-form__button'
+                  onClick={this.auth}
+              >
+                Авторизация
               </Link>
             </div>
           </div>

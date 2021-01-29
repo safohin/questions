@@ -15,10 +15,19 @@ export default class CreateQuestions extends React.Component {
 
   static propTypes = {
     addQuestion: PropTypes.func,
+    user: PropTypes.object,
   }
 
   addQuestion = () => {
-    this.props.addQuestion(this.state.questionValue, this.state.answerValue);
+
+    const question = {
+      question: this.state.questionValue,
+      answer: this.state.answerValue,
+      correctAnswer: false,
+      author: this.props.user.userName,
+    }
+
+    this.props.addQuestion(question);
     this.setState({
       questionValue: '',
       answerValue: '',

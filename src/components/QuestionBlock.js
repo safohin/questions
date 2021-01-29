@@ -20,8 +20,7 @@ export default class QuestionBlock extends React.Component {
     const input = this.inputRef.current;
 
     if(userAnswer === correctAnswer) {
-      const id = this.props.question.id;
-      this.props.changeCorrectAnswer(id);
+      this.props.changeCorrectAnswer(this.props.question.id);
       input.classList.add('corrected-answer');
       input.setAttribute('disabled', '')
     }
@@ -36,7 +35,7 @@ export default class QuestionBlock extends React.Component {
         <div className='questions-block'>
           <div className="questions-block__header">
             <span className='questions-block__count'>Вопрос №{this.props.question.index + 1}</span>
-            <span className='questions-block__author'>Автор: Сафохин Артём</span>
+            <span className='questions-block__author'>Автор: {this.props.question.author}</span>
           </div>
 
           <span className='questions-block__text'>{this.props.question.question}</span>

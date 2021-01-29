@@ -9,28 +9,62 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      auth: false
+      auth: false,
+      questionsList: [],
+      user: {},
     }
   }
   componentDidMount() {
-    const obj = {
+    let obj = {
       login: 'admin',
       password: 'admin',
+      userName: 'Safohin',
+      questionsList: [],
     }
-    sessionStorage.setItem('user', JSON.stringify(obj));
+
+    const oldUser = JSON.parse(localStorage.getItem('user'));
+    if(!oldUser) {
+      localStorage.setItem('user', JSON.stringify(obj));
+    } else {
+      obj = oldUser;
+    }
+
+    this.setState({user: obj})
   }
 
   exit = () => {
-    sessionStorage.removeItem('user');
     this.setState({auth: false});
   }
 
+  get user() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user;
+  }
+
   isAuthorization  = (login, password) => {
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = this.user;
 
     if(user.login === login && user.password === password) {
       this.setState({auth : true})
     }
+  }
+
+  addQuestion = (item) => {
+    console.log(item)
+    const user = JSON.parse(localStorage.getItem('user'));
+    const questionsList = user.questionsList;
+    item.id = questionsList.length;
+    item.index = questionsList.length;
+    questionsList.push(item)
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  changeCorrectAnswer = (id) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const questionsList = user.questionsList;
+
+    questionsList.find(x => x.id === id).correctAnswer = true;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   render() {
@@ -38,7 +72,14 @@ export default class App extends React.Component {
         <div className='App'>
           <Switch>
             <Route path='/' component={() => <Auth isAuthorization={this.isAuthorization} />} exact />
-            <Route path="/public" render={() => this.state.auth ? (<MainPage exit={this.exit}/>) : (<Redirect to={{pathname: "/"}}/>)}/>
+            <Route path="/public" render={() => this.state.auth ? (
+                <MainPage
+                    exit={this.exit}
+                    addQuestion={this.addQuestion}
+                    changeCorrectAnswer={this.changeCorrectAnswer}
+                    user={this.state.user}
+                />
+                ) : (<Redirect to={{pathname: "/"}}/>)}/>
           </Switch>
         </div>
     );

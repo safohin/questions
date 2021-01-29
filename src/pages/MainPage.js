@@ -1,23 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from "prop-types";
+
 import Header from '../components/Header';
 import Menu from '../components/Menu';
+import Profile from '../components/Profile';
 import ShowQuestions from '../components/ShowQuestions';
 import CreateQuestions from '../components/CreateQuestions';
-import PropTypes from "prop-types";
 
 export default class MainPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeWindow: 'show', // show, create
-      questionsList: [],
+      activeWindow: 'show', // show, create, profile
     }
   }
 
   static propTypes = {
     exit: PropTypes.func,
+    addQuestion: PropTypes.func,
+    changeCorrectAnswer: PropTypes.func,
+    user: PropTypes.object,
   }
 
   changeActiveWindowShow = () => {
@@ -28,23 +32,8 @@ export default class MainPage extends React.Component {
     this.setState({activeWindow: 'create'});
   }
 
-  addQuestion = (question, answer) => {
-    const riddleObj = {
-      id: this.state.questionsList.length,
-      question,
-      answer,
-      correctAnswer: false,
-      index: this.state.questionsList.length,
-    }
-    this.setState({
-      questionsList: this.state.questionsList.concat(riddleObj),
-    })
-  }
-
-  changeCorrectAnswer = (id) => {
-    const questionsList = this.state.questionsList.slice();
-    questionsList.find(x => x.id === id).correctAnswer = true;
-    this.setState({questionsList: questionsList})
+  changeActiveWindowProfile = () => {
+    this.setState({activeWindow: 'profile'});
   }
 
   render() {
@@ -53,17 +42,25 @@ export default class MainPage extends React.Component {
           <Menu
               changeActiveWindowCreate={this.changeActiveWindowCreate}
               changeActiveWindowShow={this.changeActiveWindowShow}
+              changeActiveWindowProfile={this.changeActiveWindowProfile}
               activeWindow={this.state.activeWindow}
           />
           <div className="main-content">
-            <Header exit ={this.props.exit} />
+            <Header
+                exit={this.props.exit}
+                user={this.props.user}
+                changeActiveWindowProfile={this.changeActiveWindowProfile}
+            />
             {this.state.activeWindow === 'show' ?
                 <ShowQuestions
-                    questionsList={this.state.questionsList}
-                    changeCorrectAnswer={this.changeCorrectAnswer}
-                /> :
+                    changeCorrectAnswer={this.props.changeCorrectAnswer}
+                /> : this.state.activeWindow === 'create' ?
                 <CreateQuestions
-                    addQuestion={this.addQuestion}
+                    addQuestion={this.props.addQuestion}
+                    user={this.props.user}
+                /> :
+                <Profile
+                   user={this.props.user}
                 />
             }
           </div>

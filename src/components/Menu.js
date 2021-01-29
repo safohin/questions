@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {ReactComponent as MenuIcon} from '../assets/menu.svg';
 import {ReactComponent as QuestionIcon} from '../assets/icon-cognitive.svg';
 import {ReactComponent as ServiceIcon} from '../assets/icon-service-4.svg';
+import {ReactComponent as UserIcon} from '../assets/icon-user.svg';
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class Menu extends React.Component {
   static propTypes = {
     changeActiveWindowShow: PropTypes.func,
     changeActiveWindowCreate: PropTypes.func,
+    changeActiveWindowProfile: PropTypes.func,
     activeWindow: PropTypes.string,
   }
 
@@ -32,7 +34,9 @@ export default class Menu extends React.Component {
           >
             <MenuIcon className='menu-icon' />
           </div>
+
           <div className='menu-icons__container'>
+
             <div
                 onClick={this.props.changeActiveWindowShow}
                 className={`menu-icon__block ${this.props.activeWindow === 'show' ? 'menu-icon__block--active' : ''}`}
@@ -42,6 +46,7 @@ export default class Menu extends React.Component {
               }
               <QuestionIcon className='menu-icon'/>
             </div>
+
             <div
                 onClick={this.props.changeActiveWindowCreate}
                 className={`menu-icon__block ${this.props.activeWindow === 'create' ? 'menu-icon__block--active' : ''}`}
@@ -51,7 +56,19 @@ export default class Menu extends React.Component {
               }
               <ServiceIcon className='menu-icon' />
             </div>
+
+            <div
+                onClick={this.props.changeActiveWindowProfile}
+                className={`menu-icon__block ${this.props.activeWindow === 'profile' ? 'menu-icon__block--active' : ''}`}
+            >
+              {this.state.activeMenu === true &&
+              <span className='menu-icon__info'>Профиль</span>
+              }
+              <UserIcon className='menu-icon' />
+            </div>
+
           </div>
+
         </header>
     )
   }
